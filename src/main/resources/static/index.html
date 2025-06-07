@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Analyzer Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f7f7f7;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        #video, #result {
+            margin-top: 10px;
+            border: 1px solid #ccc;
+        }
+
+        #loading {
+            display: none;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🧠 Image Analyzer Dashboard</h1>
+
+<video id="video" width="640" height="480" autoplay></video><br>
+
+<div>
+    <button onclick="processImage('shape')">🔷 Detect Shapes</button>
+    <button onclick="processImage('color')">🎨 Detect Color</button>
+    <button onclick="processImage('bright')">🌟 Detect Brightest Part</button>
+</div>
+
+<p id="loading">Processing image...</p>
+
+<canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+<h3>Processed Image:</h3>
+<img id="result" src="" alt="Processed image will appear here" width="640" />
+
+<script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const result = document.getElementById('result');
+    const loading = document.getElementById('loading');
+    const context = canvas.getContext('2d');
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => video.srcObject = stream)
+        .catch(console.error);
+
+    function processImage(mode) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        canvas.toBlob(blob => {
+            const formData = new FormData();
+            formData.append('file', blob, 'capture.png');
+
+            loading.style.display = 'block';
+
+            fetch(`/process-image?mode=${mode}`, {
+                method: 'POST',
+                body: formData
+            })
+                .then(res => res.blob())
+                .then(blob => {
+                    result.src = URL.createObjectURL(blob);
+                    loading.style.display = 'none';
+                })
+                .catch(err => {
+                    console.error(err);
+                    loading.style.display = 'none';
+                });
+        }, 'image/png');
+    }
+</script>
+
+</body>
+</html>
