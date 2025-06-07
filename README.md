@@ -45,11 +45,14 @@ This project is a web-based image processing tool that uses **OpenCV** and **Spr
   - **Brightness Detection:** Converts image to grayscale, locates the brightest pixel, and marks it.
   - **Shape Detection:** Converts image to grayscale, applies thresholding, detects contours, approximates polygonal shapes, labels them, and counts occurrences.
 
+
 ### Frontend
 
 - Uses the webcam API to stream live video.
 - Allows the user to capture an image frame and send it to the backend via `fetch` POST request.
 - Displays the processed image returned from the backend.
+
+![image](https://github.com/user-attachments/assets/cff32e49-71ea-4d86-a815-cc963aab633a)
 
 ---
 
