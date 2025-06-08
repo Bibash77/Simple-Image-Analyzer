@@ -1,72 +1,68 @@
-# Simple-Image-Analyzer
+# Color, Brightness, and Shape Detection Web Application
 
-A Spring Boot application for color detection and sharp object detection in images using OpenCV.
+## Overview
+
+This project is a web-based image processing tool that uses **OpenCV** and **Spring Boot** to detect colors, the brightest area, and simple shapes in images captured from a webcam or uploaded by the user. The backend is responsible for processing images and returning annotated results, while the frontend handles image capture and display.
+
+---
 
 ## Features
 
-- Color detection in images
-- Sharp object detection (knives, scissors, etc.)
-- Web interface for uploading and analyzing images
+- **Color Detection:**  
+  Detects predefined colors (Red, Green, Blue, Yellow) using HSV color space thresholds. The app highlights detected colored objects with bounding boxes and labels.
 
-## Prerequisites
+- **Brightness Detection:**  
+  Finds the brightest point in the image (based on grayscale intensity) and marks it with a circle and label.
 
-- Docker and Docker Compose
+- **Shape Detection:**  
+  Detects basic geometric shapes such as triangles, squares, rectangles, and circles by contour approximation, draws contours, labels each shape, and counts the number of detected shapes.
 
-## Running with Docker
+- **Multi-mode Processing:**  
+  User can select between `"color"`, `"bright"`, or `"shape"` detection modes when uploading the image.
 
-### Option 1: Using Docker Compose (Recommended)
+- **Webcam Integration:**  
+  Capture images directly from the webcam and send them to the backend for processing.
 
-1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd colordetector
-   ```
+---
 
-2. Build and start the application:
-   ```
-   docker-compose up -d
-   ```
+## Technologies Used
 
-3. Access the application at http://localhost:8080
+- Java 11+  
+- Spring Boot  
+- OpenCV (Java bindings)  
+- HTML5, JavaScript (Canvas and Fetch APIs)
 
-4. To stop the application:
-   ```
-   docker-compose down
-   ```
+---
 
-### Option 2: Using Docker directly
+## How It Works
 
-1. Build the Docker image:
-   ```
-   docker build -t colordetector .
-   ```
+### Backend
 
-2. Run the container:
-   ```
-   docker run -p 8080:8080 colordetector
-   ```
+- **DetectionController.java** exposes a REST endpoint `/process-image` that accepts an image file and a `mode` parameter (`color`, `bright`, or `shape`).
+- The uploaded image is decoded into an OpenCV `Mat` object.
+- Depending on the selected mode:
+  - **Color Detection:** Converts image to HSV color space, creates masks for predefined color ranges, finds contours, and draws bounding boxes with labels.
+  - **Brightness Detection:** Converts image to grayscale, locates the brightest pixel, and marks it.
+  - **Shape Detection:** Converts image to grayscale, applies thresholding, detects contours, approximates polygonal shapes, labels them, and counts occurrences.
 
-3. Access the application at http://localhost:8080
 
-## Troubleshooting
+### Frontend
 
-- If you encounter issues with OpenCV loading, check the container logs:
-  ```
-  docker-compose logs
-  ```
+- Uses the webcam API to stream live video.
+- Allows the user to capture an image frame and send it to the backend via `fetch` POST request.
+- Displays the processed image returned from the backend.
 
-- Make sure port 8080 is not already in use on your host machine.
+![image](https://github.com/user-attachments/assets/cff32e49-71ea-4d86-a815-cc963aab633a)
 
-## Development
+---
 
-To make changes to the application:
+## Running the Project
 
-1. Modify the source code
-2. Rebuild the Docker image:
-   ```
-   docker-compose build
-   ```
-3. Restart the container:
-   ```
-   docker-compose up -d
-   ```
+1. **Setup OpenCV:**  
+   Make sure OpenCV native libraries are installed and configured properly on your machine.
+
+2. **Build and Run Backend:**  
+   Use Maven or Gradle to build and run the Spring Boot application.  
+   Example with Maven:  
+   ```bash
+   ./mvnw spring-boot:run
