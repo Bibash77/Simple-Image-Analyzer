@@ -1,4 +1,4 @@
-package com.example.colordetector;
+package com.example.colordetector.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;

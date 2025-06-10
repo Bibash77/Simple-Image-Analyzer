@@ -1,4 +1,4 @@
-package com.example.colordetector;
+package com.example.colordetector.loader;
 
 import nu.pattern.OpenCV;
 

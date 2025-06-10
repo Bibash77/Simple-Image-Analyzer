@@ -1,4 +1,4 @@
-package com.example.colordetector;
+package com.example.colordetector.pojo;
 
 import org.opencv.core.Scalar;
 

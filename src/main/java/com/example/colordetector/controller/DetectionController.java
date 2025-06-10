@@ -1,5 +1,7 @@
-package com.example.colordetector;
+package com.example.colordetector.controller;
 
+import com.example.colordetector.pojo.ColorRange;
+import com.example.colordetector.loader.OpenCVLoader;
 import com.example.colordetector.service.SharpObjectDetector;
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
