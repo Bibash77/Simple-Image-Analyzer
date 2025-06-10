@@ -4,7 +4,15 @@
 
 This project is a web-based image processing tool that uses **OpenCV** and **Spring Boot** to detect colors, the brightest area, and simple shapes in images captured from a webcam or uploaded by the user. The backend is responsible for processing images and returning annotated results, while the frontend handles image capture and display.
 
----
+
+## Demo Url
+http://194.163.40.116:8090/ or http://bibashbogati.com.np/
+## Problem
+By default, Chrome **restricts camera and microphone access** on insecure (`http://`) origins.
+
+Chrome provides an **experimental flag** to override this restriction :
+
+search **chrome://flags/#unsafely-treat-insecure-origin-as-secure** and add **"http://194.163.40.116"** as secure list and restart the chrome.
 
 ## Features
 
